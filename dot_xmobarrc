@@ -1,0 +1,43 @@
+Config { font = "Inconsolata:size=14:lcdfilter=lcddefault:hintstyle=hintnone:rgba=rgb:antialias=true:autohint=false"
+    , additionalFonts = []
+        , borderColor = "#292929"
+        , border = TopB
+        , bgColor = "#292929"
+        , fgColor = "#FDF6E3"
+        , alpha = 255
+        , position = Top
+        , textOffset = -1
+        , iconOffset = -1
+        , lowerOnStart = True
+        , pickBroadest = False
+        , persistent = False
+        , hideOnStart = False
+        , iconRoot = "."
+        , allDesktops = True
+        , overrideRedirect = True
+        , commands = [ Run Date "%a %b %_d %Y %H:%M:%S" "date" 10
+        , Run DynNetwork     [ "--template" , "<dev>: <tx>kB/s|<rx>kB/s"
+                             , "--Low"      , "1000"       -- units: B/s
+                             , "--High"     , "5000"       -- units: B/s
+                             , "--low"      , "darkgreen"
+                             , "--normal"   , "darkorange"
+                             , "--high"     , "darkred"
+                             ] 10
+        , Run Memory ["-t" ,"RAM: <usedratio>%"] 10
+        -- , Run Volume "default" "Master" ["-t", "Vol: [<volumebar>] <status>"] 10 
+        , Run Battery
+        [ "--template", "<acstatus>"
+        , "--Low"     , "15"
+            -- battery specific options start here.
+            , "--"
+            , "--off"     , "<left> (<timeleft>)"
+        ]
+        100
+        , Run StdinReader
+        ]
+        , sepChar = "%"
+        , alignSep = "}{"
+        , template = "%StdinReader% }\
+                      \{ %memory% | %dynnetwork% | %default:Master% | %battery% | <fc=#cccccc>%date%</fc>"
+
+}

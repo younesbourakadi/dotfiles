@@ -1,0 +1,21 @@
+#!/bin/bash
+
+## https://beginners-guide-to-xmonad.readthedocs.io/configure_xsessionrc.html
+
+
+
+# keyboard layout
+setxkbmap -variant altgr-intl
+
+
+# Load resources
+
+xrdb -merge .Xresources
+
+
+# Fire up apps
+
+xscreensaver -no-splash &
+xfce4-power-manager &
+
+ exec xmonad
